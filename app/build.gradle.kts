@@ -32,16 +32,13 @@ android {
 }
 
 dependencies {
-    // Core AndroidX libraries
     implementation(libs.appcompat)
     implementation(libs.activity)
-
-    // UI components
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.cardview)
-
-    // Testing dependencies
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

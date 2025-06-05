@@ -80,7 +80,6 @@ public class SignInActivity extends AppCompatActivity {
         String studentId = Objects.requireNonNull(etStudentId.getText()).toString().trim();
         String phoneNumber = Objects.requireNonNull(etPhoneNumber.getText()).toString().trim();
 
-
         if (TextUtils.isEmpty(studentId)) {
             tilStudentId.setError("Student ID cannot be empty");
             return;

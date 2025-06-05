@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -78,23 +79,24 @@ public class QuizActivity extends AppCompatActivity {
         displayQuestion();
 
         btnSubmit.setOnClickListener(v -> checkAnswer());
-    }
 
-    /**
-     * Handles the back button press. Shows a confirmation dialog.
-     */
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Exit Quiz")
-                .setMessage("Are you sure you want to exit the quiz? Your current progress will be lost.")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    QuizActivity.super.onBackPressed(); // Call super to allow default back behavior (finish activity)
-                })
-                .setNegativeButton("No", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .show();
+        // Modern back press handling
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                new AlertDialog.Builder(QuizActivity.this)
+                        .setTitle("Exit Quiz")
+                        .setMessage("Are you sure you want to exit the quiz? Your current progress will be lost.")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            // Finish the activity
+                            finish();
+                        })
+                        .setNegativeButton("No", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
+        });
     }
 
     /**
@@ -102,10 +104,12 @@ public class QuizActivity extends AppCompatActivity {
      */
     private void displayQuestion() {
         if (questionIndex < questionList.size()) {
-            Question currentQuestion = questionList.get(questionIndex); // Get the current question
+            Question currentQuestion = questionList.get(questionIndex);
 
             tvQuestionNumber.setText(String.format(Locale.getDefault(), "Question %d of %d", questionIndex + 1, questionList.size()));
             tvQuestion.setText(currentQuestion.getQuestionText());
+            rbOptionC.setVisibility(View.VISIBLE);
+            rbOptionD.setVisibility(View.VISIBLE);
 
             radioGroupOptions.clearCheck();
 

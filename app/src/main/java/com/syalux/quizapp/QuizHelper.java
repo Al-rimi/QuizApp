@@ -84,7 +84,16 @@ public class QuizHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULTS);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_QUESTIONS + " ADD COLUMN new_column INTEGER DEFAULT 0");
+        }
         onCreate(db);
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     /**
@@ -242,8 +251,8 @@ public class QuizHelper extends SQLiteOpenHelper {
                     categories.add(c.getString(c.getColumnIndexOrThrow(KEY_CATEGORY)));
                 } while (c.moveToNext());
             }
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Error getting column index: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting categories", e);
         } finally {
             if (c != null) {
                 c.close();

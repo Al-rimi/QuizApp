@@ -30,7 +30,7 @@
         <activity android:name=".QuizActivity" />
 
         <!-- QuizResultActivity: Shows the final quiz score -->
-        <activity android:name=".QuizResultActivity" />
+        <activity android:name=".QuizResultActivity" android:exported="false" />
 
 
     </application>
