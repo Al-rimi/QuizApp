@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuizApp</string>
+    <string name="sign_in_title">Student Sign In</string>
+    <string name="student_id_hint">Student ID</string>
+    <string name="phone_number_hint">Phone Number</string>
+    <string name="sign_in_button">Sign In / Register</string>
+    <string name="select_category_title">Select Quiz Category</string>
+    <string name="submit_button">Submit Answer</string>
+    <string name="quiz_finished_title">Quiz Finished!</string>
+    <string name="finish_button">Finish Quiz</string>
+    <string name="category">Category: </string>
+    <string name="option_d">Option D</string>
+    <string name="option_a">Option A</string>
+    <string name="option_b">Option B</string>
+    <string name="option_c">Option C</string>
+    <string name="category_general_knowledge">Category: General Knowledge</string>
+    <string name="your_score_3_4">Your Score: ¾</string>
+    <string name="question_1_of_4">Question 1 of 4</string>
+    <string name="what_is_the_capital_of_france">What is the capital of France?</string>
+</resources>
