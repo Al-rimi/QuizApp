@@ -25,7 +25,7 @@ import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
 import com.syalux.quizapp.models.Exam;
 import com.syalux.quizapp.models.Question;
-import com.syalux.quizapp.utilities.QuestionManagementAdapter; // New adapter
+import com.syalux.quizapp.utilities.QuestionManagementAdapter;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +41,7 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_questions); // Create this layout
+        setContentView(R.layout.activity_manage_questions);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,7 +80,6 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
         QuestionManagementAdapter questionAdapter = new QuestionManagementAdapter(questions, this);
         questionsRecyclerView.setAdapter(questionAdapter);
 
-        // Update the exam's question count in the database
         dbHelper.updateExamQuestionCount(dbHelper.getWritableDatabase(), examId, questions.size());
 
         if (questions.isEmpty()) {
@@ -90,14 +89,14 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_manage_questions, menu); // Create this menu
+        getMenuInflater().inflate(R.menu.menu_manage_questions, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_add_question) {
-            showAddEditQuestionDialog(null); // Pass null for adding a new question
+            showAddEditQuestionDialog(null);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -129,7 +128,7 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
     private void showAddEditQuestionDialog(final Question questionToEdit) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_edit_question, null); // Create this layout
+        View dialogView = inflater.inflate(R.layout.dialog_add_edit_question, null);
         builder.setView(dialogView);
 
         final EditText etQuestionText = dialogView.findViewById(R.id.etQuestionText);
@@ -143,9 +142,8 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
         final RadioButton rbCorrectC = dialogView.findViewById(R.id.rbCorrectC);
         final RadioButton rbCorrectD = dialogView.findViewById(R.id.rbCorrectD);
         final CheckBox cbIsTrueFalse = dialogView.findViewById(R.id.cbIsTrueFalse);
-        final TextView tvOptionsLabel = dialogView.findViewById(R.id.tvOptionsLabel); // Add this TextView for better UX
+        final TextView tvOptionsLabel = dialogView.findViewById(R.id.tvOptionsLabel);
 
-        // Initially hide C and D options and their radio buttons
         etOptionC.setVisibility(View.VISIBLE);
         etOptionD.setVisibility(View.VISIBLE);
         rbCorrectC.setVisibility(View.VISIBLE);
@@ -159,7 +157,7 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
                 rbCorrectC.setVisibility(View.GONE);
                 rbCorrectD.setVisibility(View.GONE);
                 tvOptionsLabel.setVisibility(View.GONE);
-                // Ensure only A or B can be selected for true/false
+
                 if (rgCorrectAnswer.getCheckedRadioButtonId() == R.id.rbCorrectC || rgCorrectAnswer.getCheckedRadioButtonId() == R.id.rbCorrectD) {
                     rgCorrectAnswer.clearCheck();
                 }
@@ -182,14 +180,13 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
             etOptionD.setText(questionToEdit.getOptionD());
             cbIsTrueFalse.setChecked(questionToEdit.isTrueFalse());
 
-            // Set the correct answer radio button
             switch (questionToEdit.getCorrectAnswer()) {
                 case 0: rgCorrectAnswer.check(R.id.rbCorrectA); break;
                 case 1: rgCorrectAnswer.check(R.id.rbCorrectB); break;
                 case 2: rgCorrectAnswer.check(R.id.rbCorrectC); break;
                 case 3: rgCorrectAnswer.check(R.id.rbCorrectD); break;
             }
-            // Trigger the listener once if it's true/false question to adjust visibility
+
             if (questionToEdit.isTrueFalse()) {
                 etOptionC.setVisibility(View.GONE);
                 etOptionD.setVisibility(View.GONE);
@@ -202,7 +199,7 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
             builder.setTitle("Add New Question");
         }
 
-        builder.setPositiveButton("Save", null); // Set null initially to keep dialog open on invalid input
+        builder.setPositiveButton("Save", null);
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         final AlertDialog dialog = builder.create();
@@ -257,8 +254,7 @@ public class ManageQuestionsActivity extends AppCompatActivity implements Questi
                         Toast.makeText(this, "Failed to add question.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Update existing question
-                    question = questionToEdit; // Use the existing object to preserve its ID
+                    question = questionToEdit;
                     question.setQuestionText(questionText);
                     question.setOptionA(optionA);
                     question.setOptionB(optionB);

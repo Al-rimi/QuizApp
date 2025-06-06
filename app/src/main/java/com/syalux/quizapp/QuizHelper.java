@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.syalux.quizapp.models.Exam; // New model
+import com.syalux.quizapp.models.Exam;
 import com.syalux.quizapp.models.Question;
 import com.syalux.quizapp.models.QuizResult;
 import com.syalux.quizapp.models.User;
@@ -78,20 +78,18 @@ public class QuizHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_QUIZ_RESULTS);
         Log.d(TAG, "Table " + TABLE_QUIZ_RESULTS + " created.");
 
-        // Pass the 'db' instance to addDefaultData
         addDefaultData(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-        // Drop older tables if existed
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXAMS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        // Create new tables
-        // Pass the 'db' instance to onCreate
+
         onCreate(db);
     }
 
@@ -107,10 +105,7 @@ public class QuizHelper extends SQLiteOpenHelper {
      * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
     public long createUser(User user) {
-        // This method should *not* be called from onCreate or onUpgrade without passing the db instance.
-        // For external calls, it's fine to getWritableDatabase().
-        // For calls from onCreate/onUpgrade, use the overloaded method: createUser(SQLiteDatabase db, User user)
-        SQLiteDatabase db = this.getWritableDatabase(); // Original line, keep for external calls
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_STUDENT_ID, user.getStudentId());
         values.put(KEY_PHONE_NUMBER, user.getPhoneNumber());
@@ -163,9 +158,6 @@ public class QuizHelper extends SQLiteOpenHelper {
             if (c != null) {
                 c.close();
             }
-            // Do NOT close the database here if you obtained it via getReadableDatabase()
-            // because it might be needed by the calling context (e.g., SignInActivity).
-            // The SQLiteOpenHelper manages opening/closing.
         }
         return user;
     }
@@ -178,13 +170,10 @@ public class QuizHelper extends SQLiteOpenHelper {
     private void addDefaultData(SQLiteDatabase db) {
         db.beginTransaction();
         try {
-            // Create a default teacher user
             User teacher = new User("teacher123", "000-000-0000", USER_TYPE_TEACHER);
-            // Use the overloaded createUser method that accepts a db instance
             long teacherId = createUser(db, teacher);
 
             if (teacherId != -1) {
-                // Create a default exam by the teacher
                 Exam defaultExam = new Exam("General Knowledge Exam", (int) teacherId, 0, false);
                 long examId = createExam(db, defaultExam);
 
@@ -204,9 +193,9 @@ public class QuizHelper extends SQLiteOpenHelper {
                     for (Question q : defaultQuestions) {
                         createQuestion(db, q);
                     }
-                    // Update the number of questions in the exam
+
                     updateExamQuestionCount(db, (int) examId, defaultQuestions.size());
-                    publishExam(db, (int) examId, true); // Publish the default exam
+                    publishExam(db, (int) examId, true);
                     Log.d(TAG, "Default exam and questions added successfully.");
                 }
             } else {
@@ -285,7 +274,7 @@ public class QuizHelper extends SQLiteOpenHelper {
      */
     public List<Question> getQuestionsByExamId(int examId) {
         List<Question> questions = new ArrayList<>();
-        // This method is called from outside onCreate/onUpgrade, so it's fine to getWritableDatabase()
+
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_QUESTIONS + " WHERE " + KEY_EXAM_ID + " = ?";
 

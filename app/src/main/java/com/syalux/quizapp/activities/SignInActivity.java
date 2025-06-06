@@ -27,11 +27,11 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in); // You'll need to update this layout
+        setContentView(R.layout.activity_sign_in);
 
         etStudentId = findViewById(R.id.etStudentId);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        rgUserType = findViewById(R.id.rgUserType); // New RadioGroup in layout
+        rgUserType = findViewById(R.id.rgUserType);
         Button btnSignInRegister = findViewById(R.id.btnSignInRegister);
 
         dbHelper = new QuizHelper(this);
@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity {
         String userType;
 
         int selectedId = rgUserType.getCheckedRadioButtonId();
-        if (selectedId == R.id.rbStudent) { // You'll need rbStudent and rbTeacher in your layout
+        if (selectedId == R.id.rbStudent) {
             userType = USER_TYPE_STUDENT;
         } else if (selectedId == R.id.rbTeacher) {
             userType = USER_TYPE_TEACHER;

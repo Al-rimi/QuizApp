@@ -3,9 +3,9 @@ package com.syalux.quizapp.models;
 public class Exam {
     private int id;
     private String examName;
-    private int teacherId; // Foreign key to User table (teacher)
+    private int teacherId;
     private int numberOfQuestions;
-    private boolean published; // true if published, false otherwise
+    private boolean published;
 
     public Exam() {
     }

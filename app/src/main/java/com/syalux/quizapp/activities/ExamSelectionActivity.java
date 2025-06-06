@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
-import com.syalux.quizapp.models.Exam; // Import Exam model
-import com.syalux.quizapp.utilities.ExamSelectionAdapter; // New adapter
+import com.syalux.quizapp.models.Exam;
+import com.syalux.quizapp.utilities.ExamSelectionAdapter;
 
 import java.util.List;
 import java.util.Objects;
 
-import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID; // Use EXTRA_EXAM_ID
+import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID;
 import static com.syalux.quizapp.Constants.EXTRA_USER_ID;
-import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY; // Still used for quiz result category
+import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY;
 
 public class ExamSelectionActivity extends AppCompatActivity {
 
@@ -55,7 +55,7 @@ public class ExamSelectionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadAvailableExams(); // Refresh exam list when returning
+        loadAvailableExams();
     }
 
     @Override
@@ -66,9 +66,6 @@ public class ExamSelectionActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Loads published exams from the database and sets up the RecyclerView.
-     */
     private void loadAvailableExams() {
         List<Exam> publishedExams = dbHelper.getPublishedExams();
 
@@ -77,19 +74,15 @@ public class ExamSelectionActivity extends AppCompatActivity {
             return;
         }
 
-        ExamSelectionAdapter examSelectionAdapter = new ExamSelectionAdapter(publishedExams, this::startQuiz); // Pass a lambda for click listener
+        ExamSelectionAdapter examSelectionAdapter = new ExamSelectionAdapter(publishedExams, this::startQuiz);
         quizCategoryRecyclerView.setAdapter(examSelectionAdapter);
     }
 
-    /**
-     * Starts the QuizActivity with the selected exam.
-     * @param exam The selected Exam object.
-     */
     private void startQuiz(Exam exam) {
         Intent intent = new Intent(ExamSelectionActivity.this, QuizActivity.class);
         intent.putExtra(EXTRA_USER_ID, userId);
-        intent.putExtra(EXTRA_EXAM_ID, exam.getId()); // Pass the exam ID
-        intent.putExtra(EXTRA_QUIZ_CATEGORY, exam.getExamName()); // Pass exam name for result tracking
+        intent.putExtra(EXTRA_EXAM_ID, exam.getId());
+        intent.putExtra(EXTRA_QUIZ_CATEGORY, exam.getExamName());
         startActivity(intent);
     }
 }

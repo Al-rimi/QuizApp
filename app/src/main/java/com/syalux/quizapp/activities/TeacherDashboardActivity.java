@@ -15,7 +15,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
 import com.syalux.quizapp.models.Exam;
-import com.syalux.quizapp.utilities.ExamManagementAdapter; // New adapter
+import com.syalux.quizapp.utilities.ExamManagementAdapter;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +32,7 @@ public class TeacherDashboardActivity extends AppCompatActivity implements ExamM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_dashboard); // Create this layout
+        setContentView(R.layout.activity_teacher_dashboard);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,7 +61,7 @@ public class TeacherDashboardActivity extends AppCompatActivity implements ExamM
 
     private void loadTeacherExams() {
         List<Exam> exams = dbHelper.getExamsByTeacherId(teacherId);
-        ExamManagementAdapter examAdapter = new ExamManagementAdapter(exams, this); // 'this' refers to OnExamActionListener
+        ExamManagementAdapter examAdapter = new ExamManagementAdapter(exams, this);
         teacherExamsRecyclerView.setAdapter(examAdapter);
 
         if (exams.isEmpty()) {
@@ -71,7 +71,7 @@ public class TeacherDashboardActivity extends AppCompatActivity implements ExamM
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_teacher_dashboard, menu); // Create this menu
+        getMenuInflater().inflate(R.menu.menu_teacher_dashboard, menu);
         return true;
     }
 
@@ -90,7 +90,7 @@ public class TeacherDashboardActivity extends AppCompatActivity implements ExamM
     public void onEditExam(Exam exam) {
         Intent intent = new Intent(TeacherDashboardActivity.this, CreateEditExamActivity.class);
         intent.putExtra(EXTRA_USER_ID, teacherId);
-        intent.putExtra(EXTRA_EXAM_ID, exam.getId()); // Pass exam ID for editing
+        intent.putExtra(EXTRA_EXAM_ID, exam.getId());
         startActivity(intent);
     }
 
@@ -98,17 +98,16 @@ public class TeacherDashboardActivity extends AppCompatActivity implements ExamM
     public void onManageQuestions(Exam exam) {
         Intent intent = new Intent(TeacherDashboardActivity.this, ManageQuestionsActivity.class);
         intent.putExtra(EXTRA_EXAM_ID, exam.getId());
-        intent.putExtra(EXTRA_USER_ID, teacherId); // Pass teacher ID as well if needed in ManageQuestions
+        intent.putExtra(EXTRA_USER_ID, teacherId);
         startActivity(intent);
     }
 
     @Override
     public void onTogglePublish(Exam exam) {
-        // Toggle the published status
         exam.setPublished(!exam.isPublished());
         dbHelper.updateExam(exam);
         Toast.makeText(this, exam.getExamName() + (exam.isPublished() ? " published." : " unpublished."), Toast.LENGTH_SHORT).show();
-        loadTeacherExams(); // Refresh the list
+        loadTeacherExams();
     }
 
     @Override

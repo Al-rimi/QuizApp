@@ -1,5 +1,6 @@
 package com.syalux.quizapp.utilities;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class QuestionManagementAdapter extends RecyclerView.Adapter<QuestionMana
         return new QuestionViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
         Question question = questions.get(position);

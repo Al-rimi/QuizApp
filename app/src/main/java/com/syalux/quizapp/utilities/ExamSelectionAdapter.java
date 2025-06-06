@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.syalux.quizapp.R;
-import com.syalux.quizapp.models.Exam; // Import Exam model
+import com.syalux.quizapp.models.Exam;
 
 import java.util.List;
 
@@ -27,14 +27,14 @@ public class ExamSelectionAdapter extends RecyclerView.Adapter<ExamSelectionAdap
     @Override
     public ExamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_quiz_category, parent, false); // Reuse existing item_quiz_category layout
+                .inflate(R.layout.item_quiz_category, parent, false);
         return new ExamViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExamViewHolder holder, int position) {
         Exam exam = exams.get(position);
-        holder.tvCategoryName.setText(exam.getExamName()); // Use exam name as category name
+        holder.tvCategoryName.setText(exam.getExamName());
         holder.itemView.setOnClickListener(v -> listener.onExamClick(exam));
     }
 
@@ -44,7 +44,7 @@ public class ExamSelectionAdapter extends RecyclerView.Adapter<ExamSelectionAdap
     }
 
     public static class ExamViewHolder extends RecyclerView.ViewHolder {
-        TextView tvCategoryName; // Matches existing layout ID
+        TextView tvCategoryName;
 
         public ExamViewHolder(@NonNull View itemView) {
             super(itemView);

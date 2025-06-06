@@ -18,7 +18,7 @@ import androidx.core.view.WindowCompat;
 import com.google.android.material.card.MaterialCardView;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
-import com.syalux.quizapp.models.Exam; // Import Exam model
+import com.syalux.quizapp.models.Exam;
 import com.syalux.quizapp.models.Question;
 import com.syalux.quizapp.models.QuizResult;
 
@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID; // New extra
+import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID;
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY;
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_SCORE;
 import static com.syalux.quizapp.Constants.EXTRA_TOTAL_QUESTIONS;
@@ -45,8 +45,8 @@ public class QuizActivity extends AppCompatActivity {
     private int questionIndex = 0;
     private int score = 0;
     private int userId;
-    private int examId; // Store exam ID
-    private String examName; // Store exam name for quiz result category
+    private int examId;
+    private String examName;
 
     private QuizHelper dbHelper;
     private List<RadioButton> radioButtons;
@@ -56,7 +56,6 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
-        // Initialize Views
         tvQuestionNumber = findViewById(R.id.tvQuestionNumber);
         tvQuestion = findViewById(R.id.tvQuestion);
         optionsContainer = findViewById(R.id.optionsContainer);
@@ -67,8 +66,8 @@ public class QuizActivity extends AppCompatActivity {
         dbHelper = new QuizHelper(this);
 
         userId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
-        examId = getIntent().getIntExtra(EXTRA_EXAM_ID, -1); // Get exam ID
-        examName = getIntent().getStringExtra(EXTRA_QUIZ_CATEGORY); // Get exam name for result
+        examId = getIntent().getIntExtra(EXTRA_EXAM_ID, -1);
+        examName = getIntent().getStringExtra(EXTRA_QUIZ_CATEGORY);
 
         if (userId == -1 || examId == -1 || examName == null || examName.isEmpty()) {
             Toast.makeText(this, "Error: Quiz setup incomplete. Please select an exam again.", Toast.LENGTH_LONG).show();
@@ -76,7 +75,7 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
 
-        questionList = dbHelper.getQuestionsByExamId(examId); // Get questions by exam ID
+        questionList = dbHelper.getQuestionsByExamId(examId);
 
         if (questionList.isEmpty()) {
             Toast.makeText(this, "No questions available for '" + examName + "'.", Toast.LENGTH_LONG).show();
@@ -97,10 +96,10 @@ public class QuizActivity extends AppCompatActivity {
                         .setTitle("Exit Quiz")
                         .setMessage("Are you sure you want to exit the quiz? Your current progress will be lost.")
                         .setPositiveButton("Yes", (dialog, which) -> {
-                            finish(); // Finish the activity
+                            finish();
                         })
                         .setNegativeButton("No", (dialog, which) -> {
-                            dialog.dismiss(); // Dismiss the dialog
+                            dialog.dismiss();
                         })
                         .show();
             }
@@ -212,18 +211,16 @@ public class QuizActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String quizDate = sdf.format(new Date());
 
-        // Use examName for quizCategory in QuizResult
         QuizResult quizResult = new QuizResult(userId, score, questionList.size(), quizDate, examName);
 
         dbHelper.createQuizResult(quizResult);
 
-        // Navigate to QuizResultActivity
         Intent intent = new Intent(QuizActivity.this, QuizResultActivity.class);
         intent.putExtra(EXTRA_QUIZ_SCORE, score);
         intent.putExtra(EXTRA_TOTAL_QUESTIONS, questionList.size());
-        intent.putExtra(EXTRA_QUIZ_CATEGORY, examName); // Pass exam name for display in result
+        intent.putExtra(EXTRA_QUIZ_CATEGORY, examName);
         startActivity(intent);
-        finish(); // Finish QuizActivity
+        finish();
     }
 
     @Override
