@@ -2,6 +2,8 @@ package com.syalux.quizapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.Button;
@@ -60,15 +62,20 @@ public class ExamSelectionActivity extends AppCompatActivity {
 
         if (categories.isEmpty()) {
             Toast.makeText(this, "No quiz categories available. Please add questions to the database.", Toast.LENGTH_LONG).show();
-            // Optionally, you might want to finish the activity or go back to sign-in
-            // finish();
             return;
         }
 
         quizCategoryContainer.removeAllViews();
 
+        // Create the selectable item background drawable
+        int[] attrs = new int[]{android.R.attr.selectableItemBackground};
+        TypedArray ta = obtainStyledAttributes(attrs);
+        Drawable selectableItemBackground = ta.getDrawable(0);
+        ta.recycle();
+
+        CardView cardView;
         for (String category : categories) {
-            CardView cardView = new CardView(this);
+            cardView = new CardView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -79,8 +86,9 @@ public class ExamSelectionActivity extends AppCompatActivity {
             cardView.setCardElevation(8);
             cardView.setClickable(true);
             cardView.setFocusable(true);
-            cardView.setForeground(ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground));
 
+            // Use the resolved drawable
+            cardView.setForeground(selectableItemBackground);
 
             Button categoryButton = new Button(this);
             LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
@@ -92,7 +100,6 @@ public class ExamSelectionActivity extends AppCompatActivity {
             categoryButton.setTextSize(20);
             categoryButton.setPadding(32, 32, 32, 32);
             categoryButton.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-            categoryButton.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent));
             categoryButton.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
             categoryButton.setOnClickListener(v -> startQuiz(category));

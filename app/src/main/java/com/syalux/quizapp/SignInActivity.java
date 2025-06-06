@@ -119,6 +119,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         }
 
+        System.out.println("gg");
+
         Intent intent = new Intent(SignInActivity.this, ExamSelectionActivity.class);
         intent.putExtra(EXTRA_USER_ID, currentUserId);
         startActivity(intent);

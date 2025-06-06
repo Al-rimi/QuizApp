@@ -143,7 +143,7 @@ public class QuizHelper extends SQLiteOpenHelper {
      * @param db The SQLiteDatabase instance.
      */
     private void addDefaultQuestions(SQLiteDatabase db) {
-
+        db.beginTransaction();
         try {
             Question[] defaultQuestions = {
                     new Question("What is the capital of France?", "Berlin", "Madrid", "Paris", "Rome", 2, false, "Geography"),
