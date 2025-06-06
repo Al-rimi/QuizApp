@@ -1,18 +1,14 @@
 package com.syalux.quizapp;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.List;
 
@@ -21,16 +17,21 @@ import static com.syalux.quizapp.Constants.EXTRA_USER_ID;
 
 public class ExamSelectionActivity extends AppCompatActivity {
 
-    private LinearLayout quizCategoryContainer;
+    private RecyclerView quizCategoryRecyclerView;
     private QuizHelper dbHelper;
     private int userId;
+    private ExamCategoryAdapter categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_selection);
 
-        quizCategoryContainer = findViewById(R.id.quizCategoryContainer);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar); // Set the toolbar as the ActionBar
+
+        quizCategoryRecyclerView = findViewById(R.id.quizCategoryRecyclerView);
+        quizCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         dbHelper = new QuizHelper(this);
 
@@ -54,9 +55,8 @@ public class ExamSelectionActivity extends AppCompatActivity {
     }
 
     /**
-     * Loads quiz categories from the database and dynamically creates UI elements for each.
+     * Loads quiz categories from the database and sets up the RecyclerView.
      */
-    @SuppressLint({"UseCompatLoadingForDrawables", "ResourceType"})
     private void loadQuizCategories() {
         List<String> categories = dbHelper.getAllQuizCategories();
 
@@ -65,48 +65,8 @@ public class ExamSelectionActivity extends AppCompatActivity {
             return;
         }
 
-        quizCategoryContainer.removeAllViews();
-
-        // Create the selectable item background drawable
-        int[] attrs = new int[]{android.R.attr.selectableItemBackground};
-        TypedArray ta = obtainStyledAttributes(attrs);
-        Drawable selectableItemBackground = ta.getDrawable(0);
-        ta.recycle();
-
-        CardView cardView;
-        for (String category : categories) {
-            cardView = new CardView(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(16, 16, 16, 0);
-            cardView.setLayoutParams(params);
-            cardView.setRadius(16);
-            cardView.setCardElevation(8);
-            cardView.setClickable(true);
-            cardView.setFocusable(true);
-
-            // Use the resolved drawable
-            cardView.setForeground(selectableItemBackground);
-
-            Button categoryButton = new Button(this);
-            LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            categoryButton.setLayoutParams(buttonParams);
-            categoryButton.setText(category);
-            categoryButton.setTextSize(20);
-            categoryButton.setPadding(32, 32, 32, 32);
-            categoryButton.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-            categoryButton.setTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-
-            categoryButton.setOnClickListener(v -> startQuiz(category));
-
-            cardView.addView(categoryButton);
-            quizCategoryContainer.addView(cardView);
-        }
+        categoryAdapter = new ExamCategoryAdapter(categories, this::startQuiz); // Pass a lambda for click listener
+        quizCategoryRecyclerView.setAdapter(categoryAdapter);
     }
 
     /**

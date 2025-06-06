@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="TextAppearance.QuizApp.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge"/>
+    <style name="TextAppearance.QuizApp.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium"/>
+    <style name="TextAppearance.QuizApp.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall"/>
+    <style name="TextAppearance.QuizApp.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge"/>
+    <style name="TextAppearance.QuizApp.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium"/>
+    <style name="TextAppearance.QuizApp.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall"/>
+    <style name="TextAppearance.QuizApp.TitleLarge" parent="TextAppearance.Material3.TitleLarge"/>
+    <style name="TextAppearance.QuizApp.TitleMedium" parent="TextAppearance.Material3.TitleMedium"/>
+    <style name="TextAppearance.QuizApp.TitleSmall" parent="TextAppearance.Material3.TitleSmall"/>
+    <style name="TextAppearance.QuizApp.BodyLarge" parent="TextAppearance.Material3.BodyLarge"/>
+    <style name="TextAppearance.QuizApp.BodyMedium" parent="TextAppearance.Material3.BodyMedium"/>
+    <style name="TextAppearance.QuizApp.BodySmall" parent="TextAppearance.Material3.BodySmall"/>
+    <style name="TextAppearance.QuizApp.LabelLarge" parent="TextAppearance.Material3.LabelLarge"/>
+    <style name="TextAppearance.QuizApp.LabelMedium" parent="TextAppearance.Material3.LabelMedium"/>
+    <style name="TextAppearance.QuizApp.LabelSmall" parent="TextAppearance.Material3.LabelSmall"/>
 
-    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="Widget.QuizApp.Button" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/padding_huge</item>
+        <item name="android:paddingHorizontal">@dimen/padding_medium</item>
+        <item name="cornerRadius">@dimen/card_corner_radius_small</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
     </style>
 
-    <style name="RadioButtonStyle" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:background">@drawable/radio_button_background</item>
-        <item name="android:textColor">@drawable/radio_button_text_color</item>
-        <item name="android:button">@android:color/transparent</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:textSize">18sp</item>
+    <style name="Widget.QuizApp.OptionCard" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">@dimen/card_corner_radius_small</item>
+        <item name="cardElevation">@dimen/card_elevation_tiny</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainer</item>
+        <item name="strokeColor">?attr/colorOutline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Widget.QuizApp.RadioButton" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:textColor">@drawable/radio_button_text_color_selector</item>
     </style>
 
 </resources>

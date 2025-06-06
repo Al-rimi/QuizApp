@@ -1,9 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.QuizApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorSurfaceBright">@color/md_theme_light_surfaceBright</item>
+        <item name="colorSurfaceContainer">@color/md_theme_light_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/md_theme_light_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/md_theme_light_surfaceContainerHighest</item>
+        <item name="colorSurfaceContainerLow">@color/md_theme_light_surfaceContainerLow</item>
+        <item name="colorSurfaceContainerLowest">@color/md_theme_light_surfaceContainerLowest</item>
+        <item name="colorSurfaceDim">@color/md_theme_light_surfaceDim</item>
+
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.QuizApp.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.QuizApp.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.QuizApp.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.QuizApp.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.QuizApp.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.QuizApp.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.QuizApp.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.QuizApp.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.QuizApp.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.QuizApp.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.QuizApp.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.QuizApp.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.QuizApp.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.QuizApp.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.QuizApp.LabelSmall</item>
+
+        <item name="materialButtonStyle">@style/Widget.Material3.Button.ElevatedButton</item>
+        <item name="textInputStyle">@style/Widget.Material3.TextInputLayout.FilledBox</item>
+        <item name="materialCardViewStyle">@style/Widget.Material3.CardView.Elevated</item>
+        <item name="radioButtonStyle">@style/Widget.QuizApp.RadioButton</item>
+        <item name="toolbarStyle">@style/Widget.Material3.Toolbar.Surface</item>
+
     </style>
 
     <style name="Theme.QuizApp" parent="Base.Theme.QuizApp" />
+
 </resources>
