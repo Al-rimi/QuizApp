@@ -18,4 +18,39 @@
     <string name="your_score_3_4">Your Score: ¾</string>
     <string name="question_1_of_4">Question 1 of 4</string>
     <string name="what_is_the_capital_of_france">What is the capital of France?</string>
+
+    <string name="exam_name_hint">Exam Name</string>
+    <string name="publish_exam_checkbox">Publish Exam (Visible to Students)</string>
+    <string name="save_exam_button">Save Exam</string>
+
+    <string name="welcome_message">Welcome to QuizApp!</string>
+    <string name="student_teacher_id_hint">Student ID / Teacher ID</string>
+    <string name="radio_button_student">Student</string>
+    <string name="radio_button_teacher">Teacher</string>
+
+    <string name="question_text_hint">Question Text</string>
+    <string name="true_false_checkbox">True/False Question</string>
+    <string name="options_label">Options:</string>
+    <string name="correct_answer_label">Correct Answer:</string>
+
+    <string name="exam_name_placeholder">Exam Name</string>
+    <string name="questions_count_placeholder">Questions: 0</string>
+    <string name="status_unpublished">Status: Unpublished</string>
+    <string name="edit_exam_button">Edit Exam</string>
+    <string name="manage_questions_button">Manage Questions</string>
+    <string name="publish_button">Publish</string>
+    <string name="unpublish_button">Unpublish</string>
+
+    <string name="question_text_placeholder">Question Text</string>
+    <string name="option_a_placeholder">A. Option A</string>
+    <string name="option_b_placeholder">B. Option B</string>
+    <string name="option_c_placeholder">C. Option C</string>
+    <string name="option_d_placeholder">D. Option D</string>
+    <string name="correct_answer_placeholder">Correct Answer: Option X</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+
+    <string name="add_question">Add Question</string>
+    <string name="add_exam">Add Exam</string>
+
 </resources>

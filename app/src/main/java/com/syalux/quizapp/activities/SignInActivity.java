@@ -1,123 +1,105 @@
 package com.syalux.quizapp.activities;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.syalux.quizapp.utilities.BatteryStateReceiver;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
 import com.syalux.quizapp.models.User;
 
 import static com.syalux.quizapp.Constants.EXTRA_USER_ID;
-
-import java.util.Objects;
+import static com.syalux.quizapp.Constants.USER_TYPE_STUDENT;
+import static com.syalux.quizapp.Constants.USER_TYPE_TEACHER;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignInActivity";
-
-    private TextInputLayout tilStudentId, tilPhoneNumber;
-    private TextInputEditText etStudentId, etPhoneNumber;
+    private EditText etStudentId, etPhoneNumber;
+    private RadioGroup rgUserType;
     private QuizHelper dbHelper;
-    private BatteryStateReceiver batteryStateReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_sign_in); // You'll need to update this layout
 
-        tilStudentId = findViewById(R.id.tilStudentId);
         etStudentId = findViewById(R.id.etStudentId);
-        tilPhoneNumber = findViewById(R.id.tilPhoneNumber);
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        Button btnSignIn = findViewById(R.id.btnSignIn);
+        rgUserType = findViewById(R.id.rgUserType); // New RadioGroup in layout
+        Button btnSignInRegister = findViewById(R.id.btnSignInRegister);
 
         dbHelper = new QuizHelper(this);
 
-        btnSignIn.setOnClickListener(v -> signInUser());
+        btnSignInRegister.setOnClickListener(v -> handleSignInRegister());
+    }
 
-        batteryStateReceiver = new BatteryStateReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_BATTERY_LOW);
-        filter.addAction(Intent.ACTION_BATTERY_OKAY);
+    private void handleSignInRegister() {
+        String studentId = etStudentId.getText().toString().trim();
+        String phoneNumber = etPhoneNumber.getText().toString().trim();
+        String userType;
 
-        registerReceiver(batteryStateReceiver, filter);
-        Log.d(TAG, "BatteryStateReceiver registered dynamically.");
+        int selectedId = rgUserType.getCheckedRadioButtonId();
+        if (selectedId == R.id.rbStudent) { // You'll need rbStudent and rbTeacher in your layout
+            userType = USER_TYPE_STUDENT;
+        } else if (selectedId == R.id.rbTeacher) {
+            userType = USER_TYPE_TEACHER;
+        } else {
+            Toast.makeText(this, "Please select user type (Student/Teacher)", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(studentId) || TextUtils.isEmpty(phoneNumber)) {
+            Toast.makeText(this, "Please enter Student ID and Phone Number", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        User existingUser = dbHelper.getUserByStudentId(studentId);
+
+        if (existingUser == null) {
+            // Register new user
+            User newUser = new User(studentId, phoneNumber, userType);
+            long userId = dbHelper.createUser(newUser);
+            if (userId != -1) {
+                Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                redirectUser((int) userId, userType);
+            } else {
+                Toast.makeText(this, "Registration failed. Please try again.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Sign in existing user
+            if (existingUser.getPhoneNumber().equals(phoneNumber) && existingUser.getUserType().equals(userType)) {
+                Toast.makeText(this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
+                redirectUser(existingUser.getId(), existingUser.getUserType());
+            } else {
+                Toast.makeText(this, "Invalid credentials or user type.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void redirectUser(int userId, String userType) {
+        if (USER_TYPE_STUDENT.equals(userType)) {
+            Intent intent = new Intent(SignInActivity.this, ExamSelectionActivity.class);
+            intent.putExtra(EXTRA_USER_ID, userId);
+            startActivity(intent);
+        } else if (USER_TYPE_TEACHER.equals(userType)) {
+            Intent intent = new Intent(SignInActivity.this, TeacherDashboardActivity.class);
+            intent.putExtra(EXTRA_USER_ID, userId);
+            startActivity(intent);
+        }
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (batteryStateReceiver != null) {
-            unregisterReceiver(batteryStateReceiver);
-        }
         if (dbHelper != null) {
             dbHelper.close();
         }
-    }
-
-    private void signInUser() {
-
-        String studentId = Objects.requireNonNull(etStudentId.getText()).toString().trim();
-        String phoneNumber = Objects.requireNonNull(etPhoneNumber.getText()).toString().trim();
-
-        if (TextUtils.isEmpty(studentId)) {
-            tilStudentId.setError("Student ID cannot be empty");
-            return;
-        } else {
-            tilStudentId.setError(null);
-        }
-
-        if (TextUtils.isEmpty(phoneNumber)) {
-            tilPhoneNumber.setError("Phone number cannot be empty");
-            return;
-        } else {
-            tilPhoneNumber.setError(null);
-        }
-
-        User existingUser = dbHelper.getUserByStudentId(studentId);
-        int currentUserId;
-
-        if (existingUser != null) {
-            if (existingUser.getPhoneNumber().equals(phoneNumber)) {
-                currentUserId = existingUser.getId();
-                Toast.makeText(this, "Signed in successfully!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "User " + studentId + " signed in. User ID: " + currentUserId);
-            } else {
-                tilPhoneNumber.setError("Phone number does not match for this Student ID.");
-                Toast.makeText(this, "Phone number does not match for this Student ID.", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "Sign-in failed: Phone number mismatch for Student ID: " + studentId);
-                return;
-            }
-        } else {
-            User newUser = new User(studentId, phoneNumber);
-            long newRowId = dbHelper.createUser(newUser);
-
-            if (newRowId != -1) {
-                currentUserId = (int) newRowId;
-                Toast.makeText(this, "New user registered and signed in!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "New user " + studentId + " registered with ID: " + currentUserId);
-            } else {
-                Toast.makeText(this, "Failed to register user. Please try again.", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Failed to create new user: " + studentId);
-                return;
-            }
-        }
-
-        System.out.println("gg");
-
-        Intent intent = new Intent(SignInActivity.this, ExamSelectionActivity.class);
-        intent.putExtra(EXTRA_USER_ID, currentUserId);
-        startActivity(intent);
-        finish();
     }
 }

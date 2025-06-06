@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true" tools:context=".activities.CreateEditExamActivity"> <com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:titleTextColor="@color/cardview_dark_background"
+    app:subtitleTextColor="?attr/colorOnPrimary"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/> <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_medium">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/exam_name_hint"
+        android:layout_marginBottom="@dimen/margin_medium"
+        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etExamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/cbPublished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/publish_exam_checkbox"
+        android:layout_marginBottom="@dimen/margin_large"/>
+
+    <Button
+        android:id="@+id/btnSaveExam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_exam_button"
+        android:padding="@dimen/padding_small"
+        android:textSize="@dimen/text_size_body"
+        app:cornerRadius="@dimen/card_corner_radius_small"/>
+
+</LinearLayout>
+
+</LinearLayout>

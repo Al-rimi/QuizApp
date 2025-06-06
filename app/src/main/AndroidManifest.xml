@@ -13,7 +13,6 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
 
-        <!-- SignInActivity: The main entry point of the application -->
         <activity
             android:name=".activities.SignInActivity"
             android:exported="true">
@@ -23,15 +22,17 @@
             </intent-filter>
         </activity>
 
-        <!-- ExamSelectionActivity: Allows users to choose a quiz category -->
         <activity android:name=".activities.ExamSelectionActivity" />
 
-        <!-- QuizActivity: Where the quiz questions are displayed and answered -->
         <activity android:name=".activities.QuizActivity" />
 
-        <!-- QuizResultActivity: Shows the final quiz score -->
         <activity android:name=".activities.QuizResultActivity" />
 
+        <activity android:name=".activities.TeacherDashboardActivity" />
+
+        <activity android:name=".activities.CreateEditExamActivity" />
+
+        <activity android:name=".activities.ManageQuestionsActivity" />
 
     </application>
 </manifest>

@@ -13,10 +13,12 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
+import com.syalux.quizapp.models.Exam; // Import Exam model
 import com.syalux.quizapp.models.Question;
 import com.syalux.quizapp.models.QuizResult;
 
@@ -27,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID; // New extra
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY;
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_SCORE;
 import static com.syalux.quizapp.Constants.EXTRA_TOTAL_QUESTIONS;
@@ -42,7 +45,8 @@ public class QuizActivity extends AppCompatActivity {
     private int questionIndex = 0;
     private int score = 0;
     private int userId;
-    private String quizCategory;
+    private int examId; // Store exam ID
+    private String examName; // Store exam name for quiz result category
 
     private QuizHelper dbHelper;
     private List<RadioButton> radioButtons;
@@ -63,18 +67,19 @@ public class QuizActivity extends AppCompatActivity {
         dbHelper = new QuizHelper(this);
 
         userId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
-        quizCategory = getIntent().getStringExtra(EXTRA_QUIZ_CATEGORY);
+        examId = getIntent().getIntExtra(EXTRA_EXAM_ID, -1); // Get exam ID
+        examName = getIntent().getStringExtra(EXTRA_QUIZ_CATEGORY); // Get exam name for result
 
-        if (userId == -1 || quizCategory == null || quizCategory.isEmpty()) {
-            Toast.makeText(this, "Error: Quiz setup incomplete. Please sign in again.", Toast.LENGTH_LONG).show();
+        if (userId == -1 || examId == -1 || examName == null || examName.isEmpty()) {
+            Toast.makeText(this, "Error: Quiz setup incomplete. Please select an exam again.", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        questionList = dbHelper.getQuestionsByCategory(quizCategory);
+        questionList = dbHelper.getQuestionsByExamId(examId); // Get questions by exam ID
 
         if (questionList.isEmpty()) {
-            Toast.makeText(this, "No questions available for '" + quizCategory + "' category.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No questions available for '" + examName + "'.", Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -207,7 +212,8 @@ public class QuizActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String quizDate = sdf.format(new Date());
 
-        QuizResult quizResult = new QuizResult(userId, score, questionList.size(), quizDate, quizCategory);
+        // Use examName for quizCategory in QuizResult
+        QuizResult quizResult = new QuizResult(userId, score, questionList.size(), quizDate, examName);
 
         dbHelper.createQuizResult(quizResult);
 
@@ -215,8 +221,16 @@ public class QuizActivity extends AppCompatActivity {
         Intent intent = new Intent(QuizActivity.this, QuizResultActivity.class);
         intent.putExtra(EXTRA_QUIZ_SCORE, score);
         intent.putExtra(EXTRA_TOTAL_QUESTIONS, questionList.size());
-        intent.putExtra(EXTRA_QUIZ_CATEGORY, quizCategory);
+        intent.putExtra(EXTRA_QUIZ_CATEGORY, examName); // Pass exam name for display in result
         startActivity(intent);
-        finish();
+        finish(); // Finish QuizActivity
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
     }
 }

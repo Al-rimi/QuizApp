@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    style="@style/Widget.QuizApp.OptionCard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_medium">
+
+        <TextView
+            android:id="@+id/tvExamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/exam_name_placeholder"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+        <TextView
+            android:id="@+id/tvQuestionCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/questions_count_placeholder"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+        <TextView
+            android:id="@+id/tvPublishStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_unpublished"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnEditExam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_exam_button"
+                android:layout_marginEnd="@dimen/margin_small"
+                style="@style/Widget.Material3.Button.TextButton"/>
+
+            <Button
+                android:id="@+id/btnManageQuestions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manage_questions_button"
+                android:layout_marginEnd="@dimen/margin_small"
+                style="@style/Widget.Material3.Button.TextButton"/>
+
+            <Button
+                android:id="@+id/btnTogglePublish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publish_button"
+                style="@style/Widget.Material3.Button.TextButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

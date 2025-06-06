@@ -17,9 +17,9 @@
     <style name="TextAppearance.QuizApp.LabelSmall" parent="TextAppearance.Material3.LabelSmall"/>
 
     <style name="Widget.QuizApp.Button" parent="Widget.Material3.Button">
-        <item name="android:minHeight">@dimen/padding_huge</item>
         <item name="android:paddingHorizontal">@dimen/padding_medium</item>
-        <item name="cornerRadius">@dimen/card_corner_radius_small</item>
+        <item name="android:paddingVertical">@dimen/padding_small</item>
+        <item name="cornerRadius">@dimen/card_corner_radius_large</item>
         <item name="android:textAppearance">?attr/textAppearanceLabelLarge</item>
     </style>
 

@@ -7,14 +7,14 @@ public class Question {
     private String optionB;
     private String optionC;
     private String optionD;
-    private int correctAnswer;
+    private int correctAnswer; // 0 for A, 1 for B, 2 for C, 3 for D for MCQs; 0 for True, 1 for False for T/F
     private boolean isTrueFalse;
-    private String category;
+    private int examId; // Foreign key to Exam table
 
     public Question() {
     }
 
-    public Question(String questionText, String optionA, String optionB, String optionC, String optionD, int correctAnswer, boolean isTrueFalse, String category) {
+    public Question(String questionText, String optionA, String optionB, String optionC, String optionD, int correctAnswer, boolean isTrueFalse, int examId) {
         this.questionText = questionText;
         this.optionA = optionA;
         this.optionB = optionB;
@@ -22,7 +22,7 @@ public class Question {
         this.optionD = optionD;
         this.correctAnswer = correctAnswer;
         this.isTrueFalse = isTrueFalse;
-        this.category = category;
+        this.examId = examId;
     }
 
     public int getId() {
@@ -89,11 +89,11 @@ public class Question {
         isTrueFalse = trueFalse;
     }
 
-    public String getCategory() {
-        return category;
+    public int getExamId() {
+        return examId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setExamId(int examId) {
+        this.examId = examId;
     }
 }

@@ -11,8 +11,8 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">24dp</dimen>
-    <dimen name="margin_extra_large">32dp</dimen>
-    <dimen name="margin_huge">48dp</dimen>
+    <dimen name="margin_extra_large">52dp</dimen>
+    <dimen name="margin_huge">88dp</dimen>
 
     <dimen name="card_corner_radius_tiny">4dp</dimen>
     <dimen name="card_corner_radius_small">8dp</dimen>
@@ -28,5 +28,5 @@
     <dimen name="text_size_caption">12sp</dimen>
     <dimen name="text_size_body">16sp</dimen>
     <dimen name="text_size_title">22sp</dimen>
-    <dimen name="text_size_headline">28sp</dimen>
+    <dimen name="text_size_headline">38sp</dimen>
 </resources>

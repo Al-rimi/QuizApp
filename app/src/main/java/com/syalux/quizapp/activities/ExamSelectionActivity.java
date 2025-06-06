@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.syalux.quizapp.utilities.ExamCategoryAdapter;
 import com.syalux.quizapp.QuizHelper;
 import com.syalux.quizapp.R;
+import com.syalux.quizapp.models.Exam; // Import Exam model
+import com.syalux.quizapp.utilities.ExamSelectionAdapter; // New adapter
 
 import java.util.List;
+import java.util.Objects;
 
-import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY;
+import static com.syalux.quizapp.Constants.EXTRA_EXAM_ID; // Use EXTRA_EXAM_ID
 import static com.syalux.quizapp.Constants.EXTRA_USER_ID;
+import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY; // Still used for quiz result category
 
 public class ExamSelectionActivity extends AppCompatActivity {
 
@@ -30,7 +33,8 @@ public class ExamSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam_selection);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar); // Set the toolbar as the ActionBar
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Select an Exam");
 
         quizCategoryRecyclerView = findViewById(R.id.quizCategoryRecyclerView);
         quizCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -45,7 +49,13 @@ public class ExamSelectionActivity extends AppCompatActivity {
             return;
         }
 
-        loadQuizCategories();
+        loadAvailableExams();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadAvailableExams(); // Refresh exam list when returning
     }
 
     @Override
@@ -57,28 +67,29 @@ public class ExamSelectionActivity extends AppCompatActivity {
     }
 
     /**
-     * Loads quiz categories from the database and sets up the RecyclerView.
+     * Loads published exams from the database and sets up the RecyclerView.
      */
-    private void loadQuizCategories() {
-        List<String> categories = dbHelper.getAllQuizCategories();
+    private void loadAvailableExams() {
+        List<Exam> publishedExams = dbHelper.getPublishedExams();
 
-        if (categories.isEmpty()) {
-            Toast.makeText(this, "No quiz categories available. Please add questions to the database.", Toast.LENGTH_LONG).show();
+        if (publishedExams.isEmpty()) {
+            Toast.makeText(this, "No published exams available at the moment.", Toast.LENGTH_LONG).show();
             return;
         }
 
-        ExamCategoryAdapter categoryAdapter = new ExamCategoryAdapter(categories, this::startQuiz); // Pass a lambda for click listener
-        quizCategoryRecyclerView.setAdapter(categoryAdapter);
+        ExamSelectionAdapter examSelectionAdapter = new ExamSelectionAdapter(publishedExams, this::startQuiz); // Pass a lambda for click listener
+        quizCategoryRecyclerView.setAdapter(examSelectionAdapter);
     }
 
     /**
-     * Starts the QuizActivity with the selected quiz category and user ID.
-     * @param category The selected quiz category.
+     * Starts the QuizActivity with the selected exam.
+     * @param exam The selected Exam object.
      */
-    private void startQuiz(String category) {
+    private void startQuiz(Exam exam) {
         Intent intent = new Intent(ExamSelectionActivity.this, QuizActivity.class);
         intent.putExtra(EXTRA_USER_ID, userId);
-        intent.putExtra(EXTRA_QUIZ_CATEGORY, category);
+        intent.putExtra(EXTRA_EXAM_ID, exam.getId()); // Pass the exam ID
+        intent.putExtra(EXTRA_QUIZ_CATEGORY, exam.getExamName()); // Pass exam name for result tracking
         startActivity(intent);
     }
 }

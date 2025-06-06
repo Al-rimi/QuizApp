@@ -5,72 +5,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="@dimen/padding_large"
-    android:background="?android:colorBackground"
-    tools:context=".activities.SignInActivity">
+    android:padding="@dimen/padding_medium"
+    android:gravity="center_horizontal"
+    tools:context=".activities.SignInActivity"
+    android:layout_marginVertical="220dp">
 
-    <com.google.android.material.card.MaterialCardView
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_message"
+        android:textSize="@dimen/text_size_headline"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/margin_extra_large"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall"/>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="?attr/colorSurfaceContainerHigh"
-        app:cardElevation="@dimen/card_elevation_medium"
-        app:cardCornerRadius="@dimen/card_corner_radius_extra_large"
-        android:layout_margin="@dimen/margin_large">
+        android:hint="@string/student_teacher_id_hint"
+        android:layout_marginBottom="@dimen/margin_medium"
+        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:padding="@dimen/padding_extra_large"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etStudentId"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_in_title"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:textAppearance="?attr/textAppearanceHeadlineMedium"
-                android:textColor="?attr/colorOnSurface"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone_number_hint"
+        android:layout_marginBottom="@dimen/margin_large"
+        app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+        app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilStudentId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_medium"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"> <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etStudentId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/student_id_hint"
-                android:inputType="textPersonName"
-                android:maxLines="1"
-                android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPhoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilPhoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_extra_large"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phone_number_hint"
-                    android:inputType="phone"
-                    android:maxLines="1"
-                    android:singleLine="true"/>
-            </com.google.android.material.textfield.TextInputLayout>
+    <RadioGroup
+        android:id="@+id/rgUserType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin_large">
+        <RadioButton
+            android:id="@+id/rbStudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_student"
+            android:checked="true"
+            android:layout_marginEnd="@dimen/margin_medium"
+            style="@style/Widget.QuizApp.RadioButton"/>
+        <RadioButton
+            android:id="@+id/rbTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_teacher"
+            style="@style/Widget.QuizApp.RadioButton"/>
+    </RadioGroup>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_in_button"
-                style="@style/Widget.Material3.Button.ElevatedButton"/>
+    <Button
+        android:id="@+id/btnSignInRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in_button"
+        style="@style/Widget.QuizApp.Button"/>
 
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

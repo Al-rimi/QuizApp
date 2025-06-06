@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    style="@style/Widget.QuizApp.OptionCard">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_medium">
+
+        <TextView
+            android:id="@+id/tvQuestionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/question_text_placeholder"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceTitleSmall"/>
+
+        <TextView
+            android:id="@+id/tvOptionA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option_a_placeholder"
+            android:layout_marginBottom="@dimen/margin_tiny"
+            android:textAppearance="?attr/textAppearanceBodySmall"/>
+
+        <TextView
+            android:id="@+id/tvOptionB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option_b_placeholder"
+            android:layout_marginBottom="@dimen/margin_tiny"
+            android:textAppearance="?attr/textAppearanceBodySmall"/>
+
+        <TextView
+            android:id="@+id/tvOptionC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option_c_placeholder"
+            android:layout_marginBottom="@dimen/margin_tiny"
+            android:textAppearance="?attr/textAppearanceBodySmall"/>
+
+        <TextView
+            android:id="@+id/tvOptionD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/option_d_placeholder"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceBodySmall"/>
+
+        <TextView
+            android:id="@+id/tvCorrectAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/correct_answer_placeholder"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textStyle="italic"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnEditQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_button"
+                android:layout_marginEnd="@dimen/margin_small"
+                style="@style/Widget.Material3.Button.TextButton"/>
+
+            <Button
+                android:id="@+id/btnDeleteQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_button"
+                style="@style/Widget.Material3.Button.TextButton"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

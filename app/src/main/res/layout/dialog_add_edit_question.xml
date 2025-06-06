@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true" tools:context=".activities.CreateEditQuestionActivity"> <com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:titleTextColor="@color/cardview_dark_background"
+    app:subtitleTextColor="?attr/colorOnPrimary"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/> <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_medium">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/question_text_hint"
+            android:layout_marginBottom="@dimen/margin_medium"
+            app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etQuestionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minLines="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/cbIsTrueFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/true_false_checkbox"
+            android:layout_marginBottom="@dimen/margin_medium"/>
+
+        <TextView
+            android:id="@+id/tvOptionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/options_label"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceTitleSmall"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/option_a"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOptionA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/option_b"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOptionB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilOptionC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/option_c"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOptionC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilOptionD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/option_d"
+            android:layout_marginBottom="@dimen/margin_medium"
+            app:boxCornerRadiusBottomEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusBottomStart="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopEnd="@dimen/card_corner_radius_small"
+            app:boxCornerRadiusTopStart="@dimen/card_corner_radius_small">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etOptionD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/correct_answer_label"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textAppearance="?attr/textAppearanceTitleSmall"/>
+
+        <RadioGroup
+            android:id="@+id/rgCorrectAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbCorrectA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_a"
+                android:layout_marginEnd="@dimen/margin_medium"
+                style="@style/Widget.QuizApp.RadioButton"/>
+
+            <RadioButton
+                android:id="@+id/rbCorrectB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_b"
+                android:layout_marginEnd="@dimen/margin_medium"
+                style="@style/Widget.QuizApp.RadioButton"/>
+
+            <RadioButton
+                android:id="@+id/rbCorrectC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_c"
+                android:layout_marginEnd="@dimen/margin_medium"
+                style="@style/Widget.QuizApp.RadioButton"/>
+
+            <RadioButton
+                android:id="@+id/rbCorrectD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/option_d"
+                style="@style/Widget.QuizApp.RadioButton"/>
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnSaveQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_exam_button"
+            android:padding="@dimen/padding_small"
+            android:textSize="@dimen/text_size_body"
+            app:cornerRadius="@dimen/card_corner_radius_small"
+            android:layout_marginTop="@dimen/margin_medium"/>
+
+    </LinearLayout>
+
+</ScrollView>
+
+</LinearLayout>
