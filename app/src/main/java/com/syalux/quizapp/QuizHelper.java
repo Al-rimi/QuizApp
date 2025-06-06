@@ -81,9 +81,6 @@ public class QuizHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTIONS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULTS);
         if (oldVersion < 2) {
             db.execSQL("ALTER TABLE " + TABLE_QUESTIONS + " ADD COLUMN new_column INTEGER DEFAULT 0");
         }
@@ -107,7 +104,6 @@ public class QuizHelper extends SQLiteOpenHelper {
         values.put(KEY_STUDENT_ID, user.getStudentId());
         values.put(KEY_PHONE_NUMBER, user.getPhoneNumber());
         long result = db.insert(TABLE_USERS, null, values);
-        db.close();
         Log.d(TAG, "User created with ID: " + result);
         return result;
     }
@@ -137,7 +133,6 @@ public class QuizHelper extends SQLiteOpenHelper {
             if (c != null) {
                 c.close();
             }
-            db.close();
         }
         return user;
     }
@@ -148,41 +143,39 @@ public class QuizHelper extends SQLiteOpenHelper {
      * @param db The SQLiteDatabase instance.
      */
     private void addDefaultQuestions(SQLiteDatabase db) {
-        // Create sample questions
-        Question q1 = new Question("What is the capital of France?", "Berlin", "Madrid", "Paris", "Rome", 2, false, "Geography");
-        Question q2 = new Question("Is the sky blue?", "True", "False", null, null, 0, true, "General Knowledge");
-        Question q3 = new Question("Which planet is known as the Red Planet?", "Earth", "Mars", "Jupiter", "Venus", 1, false, "Science");
-        Question q4 = new Question("2 + 2 = 4", "True", "False", null, null, 0, true, "Mathematics");
-        Question q5 = new Question("The chemical symbol for water is H2O.", "True", "False", null, null, 0, true, "Science");
-        Question q6 = new Question("Who wrote 'Romeo and Juliet'?", "Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain", 1, false, "Literature");
-        Question q7 = new Question("What is the largest ocean on Earth?", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean", 3, false, "Geography");
-        Question q8 = new Question("The sun is a star.", "True", "False", null, null, 0, true, "Science");
-        Question q9 = new Question("What is the square root of 81?", "7", "8", "9", "10", 2, false, "Mathematics");
-        Question q10 = new Question("Birds are mammals.", "True", "False", null, null, 1, true, "General Knowledge");
 
-        // Insert each question into the database
-        // Log results to check for insertion failures
-        if (createQuestion(db, q1) == -1) Log.e(TAG, "Failed to insert question: " + q1.getQuestionText());
-        if (createQuestion(db, q2) == -1) Log.e(TAG, "Failed to insert question: " + q2.getQuestionText());
-        if (createQuestion(db, q3) == -1) Log.e(TAG, "Failed to insert question: " + q3.getQuestionText());
-        if (createQuestion(db, q4) == -1) Log.e(TAG, "Failed to insert question: " + q4.getQuestionText());
-        if (createQuestion(db, q5) == -1) Log.e(TAG, "Failed to insert question: " + q5.getQuestionText());
-        if (createQuestion(db, q6) == -1) Log.e(TAG, "Failed to insert question: " + q6.getQuestionText());
-        if (createQuestion(db, q7) == -1) Log.e(TAG, "Failed to insert question: " + q7.getQuestionText());
-        if (createQuestion(db, q8) == -1) Log.e(TAG, "Failed to insert question: " + q8.getQuestionText());
-        if (createQuestion(db, q9) == -1) Log.e(TAG, "Failed to insert question: " + q9.getQuestionText());
-        if (createQuestion(db, q10) == -1) Log.e(TAG, "Failed to insert question: " + q10.getQuestionText());
-        Log.d(TAG, "Default questions added successfully.");
+        try {
+            Question[] defaultQuestions = {
+                    new Question("What is the capital of France?", "Berlin", "Madrid", "Paris", "Rome", 2, false, "Geography"),
+                    new Question("Is the sky blue?", "True", "False", null, null, 0, true, "General Knowledge"),
+                    new Question("Which planet is known as the Red Planet?", "Earth", "Mars", "Jupiter", "Venus", 1, false, "Science"),
+                    new Question("2 + 2 = 4", "True", "False", null, null, 0, true, "Mathematics"),
+                    new Question("The chemical symbol for water is H2O.", "True", "False", null, null, 0, true, "Science"),
+                    new Question("Who wrote 'Romeo and Juliet'?", "Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain", 1, false, "Literature"),
+                    new Question("What is the largest ocean on Earth?", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean", 3, false, "Geography"),
+                    new Question("The sun is a star.", "True", "False", null, null, 0, true, "Science"),
+                    new Question("What is the square root of 81?", "7", "8", "9", "10", 2, false, "Mathematics"),
+                    new Question("Birds are mammals.", "True", "False", null, null, 1, true, "General Knowledge")
+            };
+
+            for (Question q : defaultQuestions) {
+                createQuestion(db, q);
+            }
+            db.setTransactionSuccessful();
+            Log.d(TAG, "Default questions added successfully.");
+        } finally {
+            db.endTransaction();
+        }
     }
 
     /**
      * Adds a new question to the database.
      * This method is package-private as it's primarily used by addDefaultQuestions.
-     * @param db The SQLiteDatabase instance.
+     *
+     * @param db       The SQLiteDatabase instance.
      * @param question The Question object to be added.
-     * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
-    long createQuestion(SQLiteDatabase db, Question question) {
+    void createQuestion(SQLiteDatabase db, Question question) {
         ContentValues values = new ContentValues();
         values.put(KEY_QUESTION_TEXT, question.getQuestionText());
         values.put(KEY_OPTION_A, question.getOptionA());
@@ -192,7 +185,7 @@ public class QuizHelper extends SQLiteOpenHelper {
         values.put(KEY_CORRECT_ANSWER, question.getCorrectAnswer());
         values.put(KEY_IS_TRUE_FALSE, question.isTrueFalse() ? 1 : 0);
         values.put(KEY_CATEGORY, question.getCategory());
-        return db.insert(TABLE_QUESTIONS, null, values);
+        db.insert(TABLE_QUESTIONS, null, values);
     }
 
     /**
@@ -204,10 +197,8 @@ public class QuizHelper extends SQLiteOpenHelper {
         List<Question> questions = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_QUESTIONS + " WHERE " + KEY_CATEGORY + " = ?";
-        Cursor c = null;
 
-        try {
-            c = db.rawQuery(selectQuery, new String[]{category});
+        try (Cursor c = db.rawQuery(selectQuery, new String[]{category})) {
             if (c.moveToFirst()) {
                 do {
                     Question q = new Question();
@@ -225,11 +216,6 @@ public class QuizHelper extends SQLiteOpenHelper {
             }
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Error getting column index: " + e.getMessage());
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-            db.close();
         }
         return questions;
     }
@@ -242,10 +228,8 @@ public class QuizHelper extends SQLiteOpenHelper {
         List<String> categories = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT DISTINCT " + KEY_CATEGORY + " FROM " + TABLE_QUESTIONS;
-        Cursor c = null;
 
-        try {
-            c = db.rawQuery(selectQuery, null);
+        try (Cursor c = db.rawQuery(selectQuery, null)) {
             if (c.moveToFirst()) {
                 do {
                     categories.add(c.getString(c.getColumnIndexOrThrow(KEY_CATEGORY)));
@@ -253,11 +237,6 @@ public class QuizHelper extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error getting categories", e);
-        } finally {
-            if (c != null) {
-                c.close();
-            }
-            db.close();
         }
         return categories;
     }
@@ -275,7 +254,6 @@ public class QuizHelper extends SQLiteOpenHelper {
         values.put(KEY_QUIZ_DATE, quizResult.getQuizDate());
         values.put(KEY_QUIZ_CATEGORY, quizResult.getQuizCategory());
         long result = db.insert(TABLE_QUIZ_RESULTS, null, values);
-        db.close();
         Log.d(TAG, "Quiz result created with ID: " + result);
     }
 }

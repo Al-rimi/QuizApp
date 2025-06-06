@@ -5,7 +5,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -41,12 +40,7 @@ public class SignInActivity extends AppCompatActivity {
 
         dbHelper = new QuizHelper(this);
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInUser();
-            }
-        });
+        btnSignIn.setOnClickListener(v -> signInUser());
 
         batteryStateReceiver = new BatteryStateReceiver();
         IntentFilter filter = new IntentFilter();
@@ -66,7 +60,9 @@ public class SignInActivity extends AppCompatActivity {
         super.onDestroy();
         if (batteryStateReceiver != null) {
             unregisterReceiver(batteryStateReceiver);
-            Log.d(TAG, "BatteryStateReceiver unregistered.");
+        }
+        if (dbHelper != null) {
+            dbHelper.close();
         }
     }
 
@@ -95,7 +91,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
         User existingUser = dbHelper.getUserByStudentId(studentId);
-        int currentUserId = -1;
+        int currentUserId;
 
         if (existingUser != null) {
             if (existingUser.getPhoneNumber().equals(phoneNumber)) {
@@ -123,11 +119,9 @@ public class SignInActivity extends AppCompatActivity {
             }
         }
 
-        if (currentUserId != -1) {
-            Intent intent = new Intent(SignInActivity.this, ExamSelectionActivity.class);
-            intent.putExtra(EXTRA_USER_ID, currentUserId);
-            startActivity(intent);
-            // finish(); // Optionally finish SignInActivity to prevent going back to it immediately
-        }
+        Intent intent = new Intent(SignInActivity.this, ExamSelectionActivity.class);
+        intent.putExtra(EXTRA_USER_ID, currentUserId);
+        startActivity(intent);
+        finish();
     }
 }

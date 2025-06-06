@@ -43,6 +43,14 @@ public class ExamSelectionActivity extends AppCompatActivity {
         loadQuizCategories();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
+    }
+
     /**
      * Loads quiz categories from the database and dynamically creates UI elements for each.
      */
