@@ -15,7 +15,7 @@
 
         <!-- SignInActivity: The main entry point of the application -->
         <activity
-            android:name=".SignInActivity"
+            android:name=".activities.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +24,13 @@
         </activity>
 
         <!-- ExamSelectionActivity: Allows users to choose a quiz category -->
-        <activity android:name=".ExamSelectionActivity" />
+        <activity android:name=".activities.ExamSelectionActivity" />
 
         <!-- QuizActivity: Where the quiz questions are displayed and answered -->
-        <activity android:name=".QuizActivity" />
+        <activity android:name=".activities.QuizActivity" />
 
         <!-- QuizResultActivity: Shows the final quiz score -->
-        <activity android:name=".QuizResultActivity" />
+        <activity android:name=".activities.QuizResultActivity" />
 
 
     </application>

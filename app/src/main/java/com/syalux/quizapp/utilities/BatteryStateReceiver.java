@@ -1,4 +1,4 @@
-package com.syalux.quizapp;
+package com.syalux.quizapp.utilities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

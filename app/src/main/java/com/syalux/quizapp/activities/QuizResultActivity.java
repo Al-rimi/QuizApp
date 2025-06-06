@@ -1,4 +1,4 @@
-package com.syalux.quizapp;
+package com.syalux.quizapp.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_CATEGORY;
 import static com.syalux.quizapp.Constants.EXTRA_QUIZ_SCORE;
 import static com.syalux.quizapp.Constants.EXTRA_TOTAL_QUESTIONS;
+
+import com.syalux.quizapp.R;
 
 public class QuizResultActivity extends AppCompatActivity {
 
@@ -33,11 +35,6 @@ public class QuizResultActivity extends AppCompatActivity {
         btnFinish.setOnClickListener(v -> finish());
     }
 
-    /**
-     * This activity shows results and is typically the end of the quiz flow.
-     * When the user presses back, it should just finish and go to the previous screen (ExamSelectionActivity).
-     * No confirmation dialog is needed here.
-     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

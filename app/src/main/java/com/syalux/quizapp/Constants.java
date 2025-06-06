@@ -19,7 +19,7 @@ public class Constants {
     public static final String KEY_OPTION_B = "option_b";
     public static final String KEY_OPTION_C = "option_c";
     public static final String KEY_OPTION_D = "option_d";
-    public static final String KEY_CORRECT_ANSWER = "correct_answer"; // 0: A, 1: B, 2: C, 3: D
+    public static final String KEY_CORRECT_ANSWER = "correct_answer";
     public static final String KEY_IS_TRUE_FALSE = "is_true_false";
     public static final String KEY_CATEGORY = "category";
 

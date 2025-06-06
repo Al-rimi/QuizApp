@@ -1,4 +1,4 @@
-package com.syalux.quizapp;
+package com.syalux.quizapp.activities;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.syalux.quizapp.utilities.BatteryStateReceiver;
+import com.syalux.quizapp.QuizHelper;
+import com.syalux.quizapp.R;
 import com.syalux.quizapp.models.User;
 
 import static com.syalux.quizapp.Constants.EXTRA_USER_ID;
@@ -51,10 +54,6 @@ public class SignInActivity extends AppCompatActivity {
         Log.d(TAG, "BatteryStateReceiver registered dynamically.");
     }
 
-    /**
-     * Unregister the BatteryStateReceiver when the activity is destroyed
-     * to prevent memory leaks and ensure it doesn't receive broadcasts when not needed.
-     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -66,11 +65,6 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Handles the sign-in or registration process for the user.
-     * Validates input, checks for existing user, creates new user if necessary,
-     * and navigates to the ExamSelectionActivity.
-     */
     private void signInUser() {
 
         String studentId = Objects.requireNonNull(etStudentId.getText()).toString().trim();

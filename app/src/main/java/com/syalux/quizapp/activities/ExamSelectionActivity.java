@@ -1,4 +1,4 @@
-package com.syalux.quizapp;
+package com.syalux.quizapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.syalux.quizapp.utilities.ExamCategoryAdapter;
+import com.syalux.quizapp.QuizHelper;
+import com.syalux.quizapp.R;
 
 import java.util.List;
 
@@ -20,7 +23,6 @@ public class ExamSelectionActivity extends AppCompatActivity {
     private RecyclerView quizCategoryRecyclerView;
     private QuizHelper dbHelper;
     private int userId;
-    private ExamCategoryAdapter categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class ExamSelectionActivity extends AppCompatActivity {
             return;
         }
 
-        categoryAdapter = new ExamCategoryAdapter(categories, this::startQuiz); // Pass a lambda for click listener
+        ExamCategoryAdapter categoryAdapter = new ExamCategoryAdapter(categories, this::startQuiz); // Pass a lambda for click listener
         quizCategoryRecyclerView.setAdapter(categoryAdapter);
     }
 
